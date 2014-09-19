@@ -1,0 +1,7 @@
+{
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "chobie/jira-api-restclient": "2.0.*"
+  }
+}
