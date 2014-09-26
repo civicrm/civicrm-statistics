@@ -44,6 +44,20 @@ SELECT COUNT(*) AS active_sites, SUM(contacts) AS total_contacts, SUM(contributi
 -- Number of contacts per active site
 SELECT COUNT(*) as num_sites, Contact
   FROM pingback_site
- WHERE is_active = 1
+ WHERE last_timestamp > (NOW() - INTERVAL 100 DAY)
  GROUP BY Contact
  ORDER BY num_sites DESC
+ LIMIT 25;
+
+SELECT COUNT(*) as num_sites, SUM(Contact), SUM(Participant), SUM(Contribution)
+  FROM pingback_site
+ WHERE last_timestamp > (NOW() - INTERVAL 50 DAY)
+       AND Contact > 10 AND Contact NOT IN (201, 202, 203, 204)
+       AND num_pings > 4
+       AND last_timestamp > (first_timestamp + INTERVAL 100 DAY)
+
+SELECT COUNT(*) as num_sites, SUM(Contact)
+  FROM pingback_site
+ WHERE last_timestamp > (NOW() - INTERVAL 100 DAY)
+       AND Contact > 10 AND Contact NOT IN (201, 202, 203, 204)
+       AND last_timestamp > (first_timestamp + INTERVAL 100 DAY)

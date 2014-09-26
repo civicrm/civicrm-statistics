@@ -38,8 +38,10 @@ echo "Total sites: $result[0]" . PHP_EOL;
 // Calculate the active sites flag
 $dbh->query("
 UPDATE pingback_site
-   SET is_active = last_timestamp > (NOW() - INTERVAL 100 DAY)
-       AND Contact NOT IN ( 1, 2, 102, 202 )
+   SET is_active = (
+         last_timestamp > (NOW() - INTERVAL 100 DAY)
+         AND Contact > 10 AND Contact NOT IN (201, 202, 203, 204)
+       )
 ");
 $result = $dbh->query("SELECT COUNT(*) FROM pingback_site WHERE is_active = 1;")->fetch();
 echo "Total active sites: $result[0]" . PHP_EOL;
@@ -51,7 +53,7 @@ INSERT INTO pingback_extension
   (`name`, `num_sites`)
   SELECT e.name, COUNT(*) AS num_sites
     FROM pingback_site s
-    LEFT JOIN " . DBPING . ".extensions e ON e.stat_id = s.last_ping_id AND e.enabled = 1
+         LEFT JOIN " . DBPING . ".extensions e ON e.stat_id = s.last_ping_id AND e.enabled = 1
    WHERE s.is_active = 1
          AND LENGTH(e.name) > 2 AND e.name NOT LIKE 'org.civicrm.component%'
    GROUP BY e.name
