@@ -31,10 +31,11 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'active-sites-lang.json',
   'query' => "
-      SELECT lang, COUNT(*) AS num_sites
-        FROM pingback_site
+      SELECT COALESCE(l.language, 'Other') AS language, COUNT(*) AS num_sites
+        FROM pingback_site s
+             LEFT JOIN common_language l ON l.iso = LEFT(s.lang,2)
        WHERE is_active = 1
-       GROUP BY lang
+       GROUP BY language
        ORDER BY num_sites DESC
  ",
 );

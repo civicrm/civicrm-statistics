@@ -29,6 +29,43 @@ CREATE TABLE IF NOT EXISTS `common_month` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `common_language`
+--
+
+DROP TABLE IF EXISTS `common_language`;
+CREATE TABLE IF NOT EXISTS `common_language` (
+  `iso` char(2) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `language` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`iso`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `common_language`
+--
+
+INSERT INTO `common_language` (`iso`, `language`) VALUES
+('en', 'English'),
+('fr', 'French'),
+('de', 'German'),
+('nl', 'Dutch'),
+('es', 'Spanish'),
+('it', 'Italian'),
+('pt', 'Portuguese'),
+('pl', 'Polish'),
+('ru', 'Russian'),
+('da', 'Danish'),
+('hu', 'Hungarian'),
+('sv', 'Swedish'),
+('nb', 'Norwegian Bokmål'),
+('fi', 'Finnish'),
+('zh', 'Chinese'),
+('el', 'Greek'),
+('he', 'Hebrew'),
+('ja', 'Japanese'),
+('lt', 'Lithuanian'),
+('ca', 'Catalan');
+
+--
 -- Table structure for table `github_commit`
 --
 
