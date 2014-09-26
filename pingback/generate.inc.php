@@ -21,10 +21,10 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'active-sites-version.json',
   'query' => "
-      SELECT version, COUNT(*) AS num_sites
+      SELECT CONCAT(LEFT(version, 3), '.x') AS short_version, COUNT(*) AS num_sites
         FROM pingback_site
        WHERE is_active = 1
-       GROUP BY version
+       GROUP BY short_version
        ORDER BY num_sites DESC
  ",
 );
