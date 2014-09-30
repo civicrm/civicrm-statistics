@@ -6,18 +6,8 @@ $queries[] = array(
         FROM " . DBPING . ".stats
        GROUP BY `month`
        ORDER BY `month` ASC
- ",
+  ",
 );
-// If the dashboard service can interpret this ...
-$queries[] = array(
-  'file' => 'active-sites.json',
-  'query' => "
-      SELECT version, lang, uf, MySQL, PHP, Contact, Contribution, Participant
-        FROM pingback_site
-       WHERE is_active = 1
- ",
-);
-// Otherwise let's pre-digest the information
 $queries[] = array(
   'file' => 'active-sites-version.json',
   'query' => "
@@ -26,7 +16,8 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY short_version
        ORDER BY num_sites DESC
- ",
+       LIMIT 10 -- we do not need more for the graph
+  ",
 );
 $queries[] = array(
   'file' => 'active-sites-lang.json',
@@ -37,7 +28,7 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY language
        ORDER BY num_sites DESC
- ",
+  ",
 );
 $queries[] = array(
   'file' => 'active-sites-uf.json',
@@ -47,7 +38,8 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY uf
        ORDER BY num_sites DESC
- ",
+       LIMIT 4 -- this hides the Standalone and Drupal8 data
+  ",
 );
 $queries[] = array(
   'file' => 'active-sites-stats.json',
@@ -55,12 +47,19 @@ $queries[] = array(
       SELECT COUNT(*) AS active_sites, SUM(Contact) AS total_contacts, SUM(Contribution) AS total_contributions, SUM(Participant) AS total_participants
         FROM pingback_site
        WHERE is_active = 1
- ",
+  ",
 );
 $queries[] = array(
+  'file' => 'extensions-stats.json',
+  'query' => "
+      SELECT COUNT(*) AS num_extensions, SUM(num_sites) AS num_installs
+        FROM pingback_extension
+  ",
+);$queries[] = array(
   'file' => 'extensions-detail.json',
   'query' => "
       SELECT * FROM pingback_extension
        ORDER BY num_sites DESC
- ",
+       LIMIT 25 -- this hides the non-public extensions
+  ",
 );
