@@ -56,7 +56,7 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'active-sites-server-php.json',
   'query' => "
-      SELECT CASE CONCAT(LEFT(PHP, LOCATE('.', PHP, 4) - 1) AS short_version, COUNT(*) AS num_sites
+      SELECT LEFT(PHP, LOCATE('.', PHP, 4) - 1) AS short_version, COUNT(*) AS num_sites
         FROM pingback_site
        WHERE is_active = 1
        GROUP BY short_version
