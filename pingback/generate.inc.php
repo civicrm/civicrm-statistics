@@ -16,7 +16,7 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY short_version
        ORDER BY num_sites DESC
-       LIMIT 10 -- we do not need more for the graph
+       LIMIT 10 -- privacy: we do not need more for the graph
   ",
 );
 $queries[] = array(
@@ -28,6 +28,7 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY language
        ORDER BY num_sites DESC
+       HAVING num_sites > 10 -- privacy: do not report marginal languages
   ",
 );
 $queries[] = array(
@@ -38,7 +39,18 @@ $queries[] = array(
        WHERE is_active = 1
        GROUP BY uf
        ORDER BY num_sites DESC
-       LIMIT 4 -- this hides the Standalone and Drupal8 data
+       LIMIT 4 -- privacy: this hides the Standalone and Drupal8 data
+  ",
+);
+$queries[] = array(
+  'file' => 'active-sites-server-country.json',
+  'query' => "
+      SELECT geoip_country AS country, COUNT(*) AS num_sites
+        FROM pingback_site s
+       WHERE is_active = 1
+       GROUP BY country
+       ORDER BY num_sites DESC
+      HAVING num_sites > 10 -- privacy: do not report marginal countries
   ",
 );
 $queries[] = array(
@@ -60,6 +72,6 @@ $queries[] = array(
   'query' => "
       SELECT * FROM pingback_extension
        ORDER BY num_sites DESC
-       LIMIT 25 -- this hides the non-public extensions
+       LIMIT 50 -- privacy: only report on top (ie. public) extensions
   ",
 );

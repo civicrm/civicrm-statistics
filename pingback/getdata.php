@@ -12,11 +12,13 @@ echo "Starting from stat_id: $result[0]" . PHP_EOL;
 // Feed raw pings into the summary database
 $query = "
 INSERT INTO pingback_site
-  (`hash`, `version`, `lang`, `uf`, `ufv`, `MySQL`, `PHP`,
+  (`hash`, `version`, `lang`, `uf`, `ufv`,
+   `geoip_country`, `MySQL`, `PHP`,
    `first_ping_id`, `first_timestamp`, `last_ping_id`, `last_timestamp`, `num_pings`,
    `Contact`, `Contribution`, `Participant`)
    SELECT
-     hash, version, lang, uf, ufv, MySQL, PHP,
+     hash, version, lang, uf, ufv,
+     geoip_country, MySQL, PHP,
      id, `time`, id, `time`, 1,
      e1.size AS Contact, e2.size AS Contribution, e3.size as Participant
    FROM " . DBPING . ".stats s
@@ -27,7 +29,8 @@ INSERT INTO pingback_site
    ORDER BY `id` ASC
    LIMIT 30000
 ON DUPLICATE KEY UPDATE
-   version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv, MySQL = s.MySQL, PHP = s.PHP,
+   version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv,
+   geoip_country = s.geoip_country, MySQL = s.MySQL, PHP = s.PHP,
    last_ping_id = s.id, last_timestamp = s.time, num_pings = num_pings + 1,
    Contact = e1.size, Contribution = e2.size, Participant = e3.size
    ";
