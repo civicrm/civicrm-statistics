@@ -11,7 +11,7 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'active-sites-version.json',
   'query' => "
-      SELECT CONCAT(LEFT(version, 3), '.x') AS short_version, COUNT(*) AS num_sites
+      SELECT CONCAT(LEFT(version, LOCATE('.', version, 4)), 'x') AS short_version, COUNT(*) AS num_sites
         FROM pingback_site
        WHERE is_active = 1
        GROUP BY short_version
@@ -51,6 +51,28 @@ $queries[] = array(
        GROUP BY country
       HAVING num_sites > 10 -- privacy: do not report marginal countries
        ORDER BY num_sites DESC
+  ",
+);
+$queries[] = array(
+  'file' => 'active-sites-server-php.json',
+  'query' => "
+      SELECT CASE CONCAT(LEFT(PHP, LOCATE('.', PHP, 4) - 1) AS short_version, COUNT(*) AS num_sites
+        FROM pingback_site
+       WHERE is_active = 1
+       GROUP BY short_version
+       ORDER BY num_sites DESC
+       LIMIT 10 -- privacy: we do not need more for the graph
+  ",
+);
+$queries[] = array(
+  'file' => 'active-sites-server-mysql.json',
+  'query' => "
+      SELECT CONCAT(LEFT(MySQL, LOCATE('.', MySQL, 4) - 1), ' (', DB, ')') AS short_version, COUNT(*) AS num_sites
+        FROM pingback_site
+       WHERE is_active = 1
+       GROUP BY short_version
+       ORDER BY num_sites DESC
+       LIMIT 10 -- privacy: we do not need more for the graph
   ",
 );
 $queries[] = array(

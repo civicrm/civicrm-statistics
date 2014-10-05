@@ -38,6 +38,16 @@ $dbh->query($query);
 $result = $dbh->query("SELECT COUNT(*) FROM pingback_site;")->fetch();
 echo "Total sites: $result[0]" . PHP_EOL;
 
+// Set the DB flavor - MySQL, MariaDB, Percona
+$query = "
+UPDATE pingback_site
+   SET DB = CASE
+         WHEN MySQL LIKE '%percona%' THEN 'Pr'
+	     WHEN MySQL LIKE '%MariaDB%' THEN 'Ma'
+	     ELSE 'My' END
+ WHERE DB IS NULL";
+$dbh->query($query);
+
 // Calculate the active sites flag
 $dbh->query("
 UPDATE pingback_site

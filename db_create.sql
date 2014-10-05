@@ -181,6 +181,8 @@ CREATE TABLE IF NOT EXISTS `pingback_site` (
   `lang` text COLLATE ascii_bin,
   `uf` text COLLATE ascii_bin,
   `ufv` text COLLATE ascii_bin,
+  `geoip_country` varchar(50) COLLATE ascii_bin DEFAULT NULL,
+  `DB` char(2) COLLATE ascii_bin DEFAULT NULL,
   `MySQL` text COLLATE ascii_bin,
   `PHP` text COLLATE ascii_bin,
   `first_ping_id` bigint(20) unsigned NOT NULL,
@@ -197,7 +199,8 @@ CREATE TABLE IF NOT EXISTS `pingback_site` (
   KEY `first_timestamp` (`first_timestamp`),
   KEY `last_ping_id` (`last_ping_id`),
   KEY `last_timestamp` (`last_timestamp`),
-  KEY `is_active` (`is_active`)
+  KEY `is_active` (`is_active`),
+  KEY `DB` (`DB`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii COLLATE=ascii_bin AUTO_INCREMENT=120191 ;
 
 -- --------------------------------------------------------
