@@ -47,7 +47,7 @@ $queries[] = array(
   'query' => "
       SELECT geoip_country AS country, COUNT(*) AS num_sites
         FROM pingback_site s
-       WHERE is_active = 1
+       WHERE is_active = 1 AND geoip_country IS NOT NULL
        GROUP BY country
       HAVING num_sites > 10 -- privacy: do not report marginal countries
        ORDER BY num_sites DESC
