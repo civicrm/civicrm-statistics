@@ -27,8 +27,8 @@ $queries[] = array(
              LEFT JOIN common_language l ON l.iso = LEFT(s.lang,2)
        WHERE is_active = 1
        GROUP BY language
+      HAVING num_sites > 10 -- privacy: do not report marginal languages
        ORDER BY num_sites DESC
-       HAVING num_sites > 10 -- privacy: do not report marginal languages
   ",
 );
 $queries[] = array(
@@ -49,8 +49,8 @@ $queries[] = array(
         FROM pingback_site s
        WHERE is_active = 1
        GROUP BY country
-       ORDER BY num_sites DESC
       HAVING num_sites > 10 -- privacy: do not report marginal countries
+       ORDER BY num_sites DESC
   ",
 );
 $queries[] = array(
