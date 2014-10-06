@@ -12,16 +12,17 @@ echo "Starting from stat_id: $result[0]" . PHP_EOL;
 // Feed raw pings into the summary database
 $query = "
 INSERT INTO pingback_site
-  (`hash`, `version`, `lang`, `uf`, `ufv`,
+  (`hash`, `version`, `lang`, `uf`, `ufv`, `civi_country`,
    `geoip_country`, `MySQL`, `PHP`,
    `first_ping_id`, `first_timestamp`, `last_ping_id`, `last_timestamp`, `num_pings`,
    `Contact`, `Contribution`, `Participant`)
    SELECT
-     hash, version, lang, uf, ufv,
+     hash, version, lang, uf, ufv, c.name
      geoip_country, MySQL, PHP,
      id, `time`, id, `time`, 1,
      e1.size AS Contact, e2.size AS Contribution, e3.size as Participant
    FROM " . DBPING . ".stats s
+   LEFT JOIN civicrm_country c ON c.id = s.co
    LEFT JOIN " . DBPING . ".entities e1 ON e1.stat_id = s.id AND e1.name = 'Contact'
    LEFT JOIN " . DBPING . ".entities e2 ON e2.stat_id = s.id AND e2.name = 'Contribution'
    LEFT JOIN " . DBPING . ".entities e3 ON e3.stat_id = s.id AND e3.name = 'Participant'
@@ -29,7 +30,7 @@ INSERT INTO pingback_site
    ORDER BY `id` ASC
    LIMIT 30000
 ON DUPLICATE KEY UPDATE
-   version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv,
+   version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv, civi_country = c.name,
    geoip_country = s.geoip_country, MySQL = s.MySQL, PHP = s.PHP,
    last_ping_id = s.id, last_timestamp = s.time, num_pings = num_pings + 1,
    Contact = e1.size, Contribution = e2.size, Participant = e3.size

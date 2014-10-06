@@ -32,6 +32,17 @@ $queries[] = array(
   ",
 );
 $queries[] = array(
+  'file' => 'active-sites-country.json',
+  'query' => "
+      SELECT COALESCE(civi_country, 'N/A') AS country, COUNT(*) AS num_sites
+        FROM pingback_site s
+       WHERE is_active = 1
+       GROUP BY country
+      HAVING num_sites > 10 -- privacy: do not report marginal languages
+       ORDER BY num_sites DESC
+  ",
+);
+$queries[] = array(
   'file' => 'active-sites-uf.json',
   'query' => "
       SELECT uf, COUNT(*) AS num_sites
