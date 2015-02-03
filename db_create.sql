@@ -66,6 +66,57 @@ INSERT INTO `common_language` (`iso`, `language`) VALUES
 ('ca', 'Catalan');
 
 --
+-- Table structure for table `common_contactrange`
+--
+
+DROP TABLE IF EXISTS `common_contactrange`;
+CREATE TABLE IF NOT EXISTS `common_contactrange` (
+  `range` varchar(20) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `low` int(8) NOT NULL,
+  `high` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `common_contactrange`
+--
+
+INSERT INTO `common_contactrange` (`range`, `low`, `high`) VALUES
+('less than 250', 0, 250),
+('250 to 1,000', 250, 1000),
+('1,000 to 2,500', 1000, 2500),
+('2,500 to 10,000', 2500, 10000),
+('10,000 to 25,000', 10000, 25000),
+('25,000 to 100,000', 25000, 100000),
+('100,000 to 250,000', 100000, 250000),
+('250,000 and up', 250000, 90000000);
+
+--
+-- Dumping data for table `common_language`
+--
+
+INSERT INTO `common_language` (`iso`, `language`) VALUES
+('en', 'English'),
+('fr', 'French'),
+('de', 'German'),
+('nl', 'Dutch'),
+('es', 'Spanish'),
+('it', 'Italian'),
+('pt', 'Portuguese'),
+('pl', 'Polish'),
+('ru', 'Russian'),
+('da', 'Danish'),
+('hu', 'Hungarian'),
+('sv', 'Swedish'),
+('nb', 'Norwegian Bokmål'),
+('fi', 'Finnish'),
+('zh', 'Chinese'),
+('el', 'Greek'),
+('he', 'Hebrew'),
+('ja', 'Japanese'),
+('lt', 'Lithuanian'),
+('ca', 'Catalan');
+
+--
 -- Table structure for table `github_commit`
 --
 
