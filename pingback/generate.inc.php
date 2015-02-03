@@ -100,11 +100,28 @@ $queries[] = array(
       SELECT COUNT(*) AS num_extensions, SUM(num_sites) AS num_installs
         FROM pingback_extension
   ",
-);$queries[] = array(
+);
+$queries[] = array(
   'file' => 'extensions-detail.json',
   'query' => "
       SELECT * FROM pingback_extension
        ORDER BY num_sites DESC
        LIMIT 50 -- privacy: only report on top (ie. public) extensions
+  ",
+);
+$queries[] = array(
+  'file' => 'contacts-range.json',
+  'query' => "
+      SELECT
+        SUM(Contact < 250) AS `0 to 250`,
+        SUM(Contact BETWEEN 251  AND 1000) AS `250 to 1,000`,
+        SUM(Contact BETWEEN 1001 AND 2500) AS `1,000 to 2,500`,
+        SUM(Contact BETWEEN 2501 AND 10000) AS `2,500 to 10,000`,
+        SUM(Contact BETWEEN 10001 AND 25000) AS `10,000 to 25,000`,
+        SUM(Contact BETWEEN 25001 AND 100000) AS `25,000 to 100,000`,
+        SUM(Contact BETWEEN 100000 AND 250000) AS `100,000 to 250,000`,
+        SUM(Contact > 250000) AS `250,000 and up`
+   FROM pingback_site
+  WHERE is_active = 1
   ",
 );
