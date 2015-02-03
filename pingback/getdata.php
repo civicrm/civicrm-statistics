@@ -5,7 +5,7 @@ require_once(dirname(__DIR__) . '/config.php');
 $dbh = new PDO('mysql:dbname='.DBNAME.';host='.DBHOST, DBUSER, DBPASS);
 
 // Start from the last summarized pingback
-$result = $dbh->query("SELECT MAX(last_ping_id) FROM pingback_site;")->fetch();
+$result = $dbh->query("SELECT MAX(last_ping_id) FROM pingback_site")->fetch();
 if (empty($result[0])) $result[0] = 0;
 echo "Starting from stat_id: $result[0]" . PHP_EOL;
 
@@ -17,17 +17,17 @@ INSERT INTO pingback_site
    `first_ping_id`, `first_timestamp`, `last_ping_id`, `last_timestamp`, `num_pings`,
    `Contact`, `Contribution`, `Participant`)
    SELECT
-     hash, version, lang, uf, ufv, c.name
+     hash, version, lang, uf, ufv, c.name,
      geoip_country, MySQL, PHP,
-     id, `time`, id, `time`, 1,
+     s.id, s.time, s.id, s.time, 1,
      e1.size AS Contact, e2.size AS Contribution, e3.size as Participant
    FROM " . DBPING . ".stats s
    LEFT JOIN civicrm_country c ON c.id = s.co
    LEFT JOIN " . DBPING . ".entities e1 ON e1.stat_id = s.id AND e1.name = 'Contact'
    LEFT JOIN " . DBPING . ".entities e2 ON e2.stat_id = s.id AND e2.name = 'Contribution'
    LEFT JOIN " . DBPING . ".entities e3 ON e3.stat_id = s.id AND e3.name = 'Participant'
-   WHERE `id` > $result[0]
-   ORDER BY `id` ASC
+   WHERE s.id > $result[0]
+   ORDER BY s.id ASC
    LIMIT 30000
 ON DUPLICATE KEY UPDATE
    version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv, civi_country = c.name,
