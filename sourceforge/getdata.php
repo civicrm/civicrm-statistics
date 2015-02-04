@@ -25,7 +25,10 @@ $dbh->query(substr($query,0,-1));
 $dbh->query("DELETE FROM sourceforge_download WHERE type='M'");
 $query = "INSERT INTO sourceforge_download (type, label, value) VALUES ";
 foreach ($result->downloads as $stat) {
-  $stat[0] = substr($stat[0], 0, 7); // keep only month part of string
-  $query .= "('M', '$stat[0]', $stat[1]),";
+  // Workaround for sf.net adding extra 0 values in their stats
+  if (substr($stat[0], -8) == '00:00:00') {
+    $stat[0] = substr($stat[0], 0, 7); // keep only month part of string
+    $query .= "('M', '$stat[0]', $stat[1]),";
+  }
 }
 $dbh->query(substr($query,0,-1));
