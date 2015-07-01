@@ -60,6 +60,21 @@ UPDATE pingback_site
 $result = $dbh->query("SELECT COUNT(*) FROM pingback_site WHERE is_active = 1;")->fetch();
 echo "Total active sites: $result[0]" . PHP_EOL;
 
+// Create the cohort data on the first of each month
+if (date('j') == 1) {
+  // Loop over all previous cohorts and calculate last month's data
+  $cohort = '2014-09';
+  $lmonth = date('Y-m', strtotime('-1 week'));
+  while ($cohort <= $lmonth) {
+    $dbh->query("
+INSERT INTO pingback_cohort (cohort, month, num_sites)
+VALUES ('$cohort', '$lmonth', (
+            SELECT COUNT(*) FROM pingback_site
+             WHERE LEFT(first_timestamp,7) = '$cohort' AND last_timestamp >= '$lmonth'))");
+    $cohort = date('Y-m', strtotime($cohort.'-01 +1 month'));
+  }
+}
+
 // Now calculate the extension stats
 $dbh->query("TRUNCATE pingback_extension");
 $query = "

@@ -91,32 +91,6 @@ INSERT INTO `common_contactrange` (`range`, `low`, `high`) VALUES
 ('250,000 and up', 250000, 90000000);
 
 --
--- Dumping data for table `common_language`
---
-
-INSERT INTO `common_language` (`iso`, `language`) VALUES
-('en', 'English'),
-('fr', 'French'),
-('de', 'German'),
-('nl', 'Dutch'),
-('es', 'Spanish'),
-('it', 'Italian'),
-('pt', 'Portuguese'),
-('pl', 'Polish'),
-('ru', 'Russian'),
-('da', 'Danish'),
-('hu', 'Hungarian'),
-('sv', 'Swedish'),
-('nb', 'Norwegian Bokmål'),
-('fi', 'Finnish'),
-('zh', 'Chinese'),
-('el', 'Greek'),
-('he', 'Hebrew'),
-('ja', 'Japanese'),
-('lt', 'Lithuanian'),
-('ca', 'Catalan');
-
---
 -- Table structure for table `github_commit`
 --
 
@@ -254,6 +228,18 @@ CREATE TABLE IF NOT EXISTS `pingback_site` (
   KEY `is_active` (`is_active`),
   KEY `DB` (`DB`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=ascii COLLATE=ascii_bin AUTO_INCREMENT=120191 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pingback_cohort`
+--
+
+CREATE TABLE IF NOT EXISTS `pingback_cohort` (
+  `cohort` char(7) COLLATE ascii_bin NOT NULL,
+  `month` char(7) COLLATE ascii_bin NOT NULL,
+  `num_sites` int(11) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 
 -- --------------------------------------------------------
 
