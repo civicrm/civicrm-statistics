@@ -62,17 +62,29 @@ echo "Total active sites: $result[0]" . PHP_EOL;
 
 // Create the cohort data on the first of each month
 if (date('j') == 1) {
-  // Loop over all previous cohorts and calculate last month's data
+  echo "Recalculating cohort data:";
+  // We need to calculate cohort data all over again since the
+  // values might have changed with sites that have lingered
+  // ex: someone from cohort X reconnects this month after been absent for a few months
+  // Clear the cohort table
+  $dbh->query("TRUNCATE pingback_cohort");
+  // Loop over all previous cohorts and recalculate previous month's data
   $cohort = '2014-09';
-  $lmonth = date('Y-m', strtotime('-1 week'));
-  while ($cohort <= $lmonth) {
-    $dbh->query("
-INSERT INTO pingback_cohort (cohort, month, num_sites)
-VALUES ('$cohort', '$lmonth', (
+  $thismonth = date('Y-m');
+  while ($cohort < $thismonth) {
+    echo " $cohort";
+    $month = $cohort;
+    while ($month < $thismonth) {
+      $dbh->query("
+INSERT INTO pingback_cohort (`cohort`, `month`, `num_sites`)
+VALUES ('$cohort', '$month', (
             SELECT COUNT(*) FROM pingback_site
-             WHERE LEFT(first_timestamp,7) = '$cohort' AND last_timestamp >= '$lmonth'))");
+             WHERE LEFT(first_timestamp,7) = '$cohort' AND last_timestamp >= CONCAT('$month', '-01')))");
+      $month = date('Y-m', strtotime($month.'-01 +1 month'));
+    }
     $cohort = date('Y-m', strtotime($cohort.'-01 +1 month'));
   }
+  echo PHP_EOL;
 }
 
 // Now calculate the extension stats
