@@ -18,7 +18,8 @@ This is done by the 'generate.php' script in the project root. This file will co
 
 # Other considerations
 You should run composer to download the project dependencies.
-The project file 'config.php' is not published as it contains sensitive data.
+civicrm-statistics.sh encapsulates all that is needed to update the statistics, run it daily with a cron job.
+The project file 'config.php' is not published as it contains sensitive data. Adapt from the template file.
 Each subdirectory might also contain:
  - a 'db_create.sql' for creating the tables it needs in the database
  - a 'refs' folder with links and/or documentation that helped in the development
