@@ -18,7 +18,9 @@ done
 
 # Regenerate statistics and push to destination
 php generate.php
-rsync -a json/ $DEST
+rsync -a json $DEST
+# and also archive (will someday be useful one way or another ...)
+cp -R json /var/www/stats.civicrm.org/archive/`date +%F`
 
 # For the log file
 echo --- Done ---
