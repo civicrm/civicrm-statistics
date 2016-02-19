@@ -19,6 +19,9 @@ done
 # Regenerate statistics and push to destination
 php generate.php
 rsync -a json $DEST
+# create .htaccess to allow access from anywhere (cf. CORS for $.getJSON)
+echo 'Header add Access-Control-Allow-Origin "*"' > $DEST/.htaccess
+
 # and also archive (will someday be useful one way or another ...)
 cp -R json /var/www/stats.civicrm.org/archive/`date +%F`
 
