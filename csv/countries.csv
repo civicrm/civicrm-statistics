@@ -9,6 +9,7 @@ Armenia,AM,ARM
 Australia,AU,AUS
 Austria,AT,AUT
 Azerbaijan,AZ,AZE
+Bahamas,BS,BHS
 "Bahamas, The",BS,BHS
 Bahrain,BH,BHR
 Bangladesh,BD,BGD
@@ -33,13 +34,15 @@ Cape Verde,CV,CPV
 Central African Republic,CF,CAF
 Chad,TD,TCD
 Chile,CL,CHL
+China,CN,CHN
 "China, People's Republic of",CN,CHN
 Colombia,CO,COL
 Comoros,KM,COM
 "Congo, The Democratic Republic of the",CD,COD
 "Congo, Republic of the",CG,COG
 Costa Rica,CR,CRI
-Cote d'Ivoire (Ivory Coast),CI,CIV
+Ivory Coast,CI,CIV
+Cote d'Ivoire,CI,CIV
 Croatia,HR,HRV
 Cuba,CU,CUB
 Cyprus,CY,CYP
@@ -83,11 +86,13 @@ Italy,IT,ITA
 Jamaica,JM,JAM
 Japan,JP,JPN
 Jordan,JO,JOR
+Hashemite Kingdom of Jordan,JO,JOR
 Kazakhstan,KZ,KAZ
 Kenya,KE,KEN
 Kiribati,KI,KIR
 "Korea, North",KP,PRK
 "Korea, South",KR,KOR
+Republic of Korea,KR,KOR
 Kuwait,KW,KWT
 Kyrgyzstan,KG,KGZ
 Laos,LA,LAO
@@ -98,6 +103,7 @@ Liberia,LR,LBR
 Libya,LY,LBY
 Liechtenstein,LI,LIE
 Lithuania,LT,LTU
+Republic of Lithuania,LT,LTU
 Luxembourg,LU,LUX
 "Macedonia, Republic of",MK,MKD
 Madagascar,MG,MDG
@@ -112,6 +118,7 @@ Mauritius,MU,MUS
 Mexico,MX,MEX
 Micronesia,FM,FSM
 Moldova,MD,MDA
+Republic of Moldova,MD,MDA
 Monaco,MC,MCO
 Mongolia,MN,MNG
 Montenegro,ME,MNE
@@ -139,6 +146,7 @@ Poland,PL,POL
 Portugal,PT,PRT
 Qatar,QA,QAT
 Romania,RO,ROU
+Russia,RU,RUS
 Russian Federation,RU,RUS
 Rwanda,RW,RWA
 Saint Kitts and Nevis,KN,KNA
@@ -154,6 +162,7 @@ Seychelles,SC,SYC
 Sierra Leone,SL,SLE
 Singapore,SG,SGP
 Slovakia,SK,SVK
+Slovak Republic,SK,SVK
 Slovenia,SI,SVN
 Solomon Islands,SB,SLB
 Somalia,SO,SOM
@@ -192,6 +201,7 @@ Yemen,YE,YEM
 Zambia,ZM,ZMB
 Zimbabwe,ZW,ZWE
 Abkhazia,GE,GEO
+Taiwan,TW,TWN
 "China, Republic of (Taiwan)",TW,TWN
 Nagorno-Karabakh,AZ,AZE
 Northern Cyprus,CY,CYP

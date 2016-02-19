@@ -37,9 +37,10 @@ $queries[] = array(
   'file' => 'active-sites-country.json',
   'archive' => 'monthly',
   'query' => "
-      SELECT COALESCE(civi_country, 'N/A') AS country, COUNT(*) AS num_sites
+      SELECT COALESCE(civi_country, 'N/A') AS country, c.iso2, c.iso3, COUNT(*) AS num_sites
         FROM pingback_site s
-       WHERE is_active = 1
+             LEFT JOIN common_country c ON c.name = civi_country
+   	   WHERE is_active = 1
        GROUP BY country
       HAVING num_sites > 10 -- privacy: do not report marginal languages
        ORDER BY num_sites DESC
@@ -61,9 +62,10 @@ $queries[] = array(
   'file' => 'active-sites-server-country.json',
   'archive' => 'monthly',
   'query' => "
-      SELECT geoip_country AS country, COUNT(*) AS num_sites
+      SELECT geoip_country AS country, c.iso2, c.iso3, COUNT(*) AS num_sites
         FROM pingback_site s
-       WHERE is_active = 1 AND geoip_country IS NOT NULL
+             LEFT JOIN common_country c ON c.name = geoip_country
+   	   WHERE is_active = 1 AND geoip_country IS NOT NULL
        GROUP BY country
       HAVING num_sites > 10 -- privacy: do not report marginal countries
        ORDER BY num_sites DESC
