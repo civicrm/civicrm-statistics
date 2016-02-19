@@ -1,0 +1,3 @@
+Source file: http://www.loc.gov/standards/iso639-2/ascii_8bits.html
+Adapated mainly by deleting unused columns/lines. Note we only really need 2 letter codes.
+Imported into the common_language table before mysqldump through PHPMyAdmin

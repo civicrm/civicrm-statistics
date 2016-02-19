@@ -1,0 +1,3 @@
+Source file: https://commondatastorage.googleapis.com/ckannet-storage/2011-11-25T132653/iso_3166_2_countries.csv
+Adapted to match CiviCRM country names for the Congos, Russian Federation, Tanzania and a few other countries
+Imported into the common_country table before mysqldump through PHPMyAdmin
