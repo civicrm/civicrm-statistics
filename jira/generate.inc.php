@@ -41,13 +41,14 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'issues-open-by-version.json',
   'query' => "
-      SELECT v.version, COUNT(*) AS num_issues
+      SELECT SUBSTRING_INDEX(v.version, '.', 2) AS minor, COUNT(*) AS num_issues
         FROM jira_issue i
              LEFT JOIN jira_version v
                     ON v.issue = i.issue AND v.type = 'Affects'
-       WHERE status IN $status[open]
-       GROUP BY v.version
-       ORDER BY v.version ASC
+       WHERE v.version REGEXP '^[0-9]' -- Discard 'Future' and other placeholder versions
+             AND status IN $status[open]
+       GROUP BY minor
+       ORDER BY minor DESC
    ",
 );
 $queries[] = array(
@@ -64,13 +65,14 @@ $queries[] = array(
 $queries[] = array(
   'file' => 'issues-closed-by-version.json',
   'query' => "
-      SELECT v.version, COUNT(*) AS num_issues
+      SELECT SUBSTRING_INDEX(v.version, '.', 2) AS minor, COUNT(*) AS num_issues
         FROM jira_issue i
              LEFT JOIN jira_version v
                     ON v.issue = i.issue AND v.type = 'Fix'
-       WHERE status IN $status[closed]
-       GROUP BY v.version
-       ORDER BY v.version ASC
+       WHERE v.version REGEXP '^[0-9]' -- Discard 'Future' and other placeholder versions
+             AND status IN $status[closed]
+       GROUP BY minor
+       ORDER BY minor DESC
    ",
 );
 $queries[] = array(
