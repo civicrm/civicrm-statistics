@@ -45,7 +45,7 @@ if (!empty($_REQUEST['tab']) || in_array($_REQUEST['tab'], array_keys($tabs))) {
 if (!empty($tabs[$tab]['iframe'])) {
   echo '
     <div style="float:right;"><h3 style="margin: 0;">by <a href="http://www.cividesk.com">
-          <img style="margin-bottom: 10px; height: auto; max-width: 180px;" src="https://www.cividesk.com/sites/cividesk.com/themes/cividesk_theme/logo.png" alt="Cividesk"/>
+          <img style="margin-bottom: 5px; height: auto; max-width: 145px;" src="https://www.cividesk.com/sites/cividesk.com/themes/cividesk_theme/logo.png" alt="Cividesk"/>
     </a></h3></div>';
 }
 ?>
@@ -104,10 +104,13 @@ if (!empty($tabs[$tab]['iframe'])) {
       <li>the <a href="https://github.com/civicrm/civicrm-statistics">civicrm-statistics</a> project on github</li>
     </ul>
     <p>Finally, please feel free to contact Nicolas at Cividesk with any questions, concerns or encouragements related to these statistics.</p>
-<?php } ?>
-    <footer role="contentinfo" style="margin-top: 20px;">
+<?php
+}
+if (empty($tabs[$tab]['iframe'])) {
+  echo '
+    <footer role="contentinfo" style="margin-top: 20px; border-top: 1px solid #c7c7c9;">
     <div class="container">
-      <p style="text-align: center;">
+      <p style="text-align: center; margin-top: 10px;">
         The CiviCRM Statistics project is produced as part of the <a href="https://civicrm.org/marketing-team">marketing team</a> as<br/>
         an in-kind contribution by <a href="http://www.cividesk.com">Cividesk</a>, a CiviCRM partner and contributor.<br/>
         Support for the project are reflected in CiviCRM badges.<br/> Looking for an expert? Look for the badge.<br/>
@@ -118,6 +121,8 @@ if (!empty($tabs[$tab]['iframe'])) {
         <img style="width: 80px;" src="https://www.cividesk.com/sites/cividesk.com/files/badge_sustaining_contributor.png" alt="Sustaining Contributor"/>
       </p>
     </div>
-  </footer>
+  </footer>';
+}
+?>
   </body>
 </html>
