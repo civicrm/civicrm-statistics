@@ -96,6 +96,13 @@ if (!empty($tabs[$tab]['iframe'])) {
       <li>API calls to GitHub, JIRA and our forums</li>
     </ul>
     <p>These data sources are regularly queried for new data, this data is aggregated in a central database and statistics are produced from this database on a daily basis.</p>
+    <h3>What is an 'Active site'?</h3>
+    <p>We define an 'Active site' as an installation of CiviCRM in which:</p>
+    <ul>
+      <li>a user with the 'Administrator' role has logged in within the past 100 days
+      <li>and where the database contains at least 10 more contacts that what is pre-loaded with the demo datasets.</li>
+    </ul>
+    <p>While not taking into account all possible use cases, this is certainly a very reasonable definition and the best we can do with the limited amount of information that is available to us. As a matter of comparison, most other statistics on software usage refer to the number of downloads, the number of times the software was installed (without substracting the uninstalls), or the number of users accounts ever created (regardless of their activity).</p>
     <h3>For more information</h3>
     <p>Additional resources include:</p>
     <ul>
