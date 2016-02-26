@@ -713,6 +713,46 @@ CREATE TABLE IF NOT EXISTS `sourceforge_download` (
   `value` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stackexchange_history`
+--
+
+DROP TABLE IF EXISTS `stackexchange_history`;
+CREATE TABLE IF NOT EXISTS `stackexchange_history` (
+  `ts_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `total_users` INT(10) NOT NULL,
+  `total_badges` INT(10) NOT NULL,
+  `total_questions` INT(10) NOT NULL,
+  `total_answers` INT(10) NOT NULL,
+  `total_unanswered` INT(10) NOT NULL,
+  `total_accepted` INT(10) NOT NULL,
+  `total_votes` INT(10) NOT NULL,
+  `total_comments` INT(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stackexchange_users`
+--
+
+DROP TABLE IF EXISTS `stackexchange_users`;
+CREATE TABLE IF NOT EXISTS `stackexchange_users` (
+  `account_id`  INT(10) NOT NULL,
+  `display_name` VARCHAR(64) NOT NULL,
+  `user_type` VARCHAR(32) NOT NULL,
+  `location` VARCHAR(255) NULL,
+  `reputation` INT(10) NOT NULL,
+  `accept_rate` INT(10) NULL,
+  `badges_gold` INT(10) NOT NULL,
+  `badges_silver` INT(10) NOT NULL,
+  `badges_bronze` INT(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
