@@ -9,12 +9,11 @@ $status = array(
 $queries[] = array(
   'file' => 'issues-created-history.json',
   'query' => "
-      SELECT DATE_FORMAT(m.month, '%Y-%m') AS `month`,
+      SELECT LEFT(m.month, 7) AS `month`,
              (
              SELECT COUNT(*)
                FROM jira_issue i
-              WHERE i.created < m.month
-                    AND (i.resolved IS NULL OR i.resolved > m.month)
+              WHERE LEFT(i.created, 7) = LEFT(m.month, 7)
              ) AS num_issues
         FROM common_month m
         ORDER BY m.month ASC
