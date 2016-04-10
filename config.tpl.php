@@ -10,8 +10,8 @@
  
 const DBHOST = 'localhost';
 const DBNAME = 'stats_central';
-const DBUSER = 'root';
-const DBPASS = '';
+const DBUSER = '<username>';
+const DBPASS = '<password>';
 
 // Ping-backs database (http://latest.civicrm.org)
 const DBPING = 'civicrm_raw_stats';
@@ -21,3 +21,7 @@ const DBDOWN = 'civicrm_downloads';
 const DBFORUM = 'civicrm_forum';
 
 const DATESTART = '2004-12-07 06:13:00'; // Date of the start of the project (from JIRA)
+
+// JIRA credentials
+define('JIRA_USERNAME', '<username>');
+define('JIRA_PASSWORD', '<password>');

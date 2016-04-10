@@ -7,7 +7,7 @@ require __DIR__ . "/../vendor/autoload.php";
 function getApiClient() {
     $api = new \chobie\Jira\Api(
         "https://issues.civicrm.org/jira",
-        new \chobie\Jira\Api\Authentication\Basic("nganivet", "6NVBpJEwk0")
+        new \chobie\Jira\Api\Authentication\Basic(JIRA_USERNAME, JIRA_PASSWORD)
     );
     return $api;
 }
