@@ -20,7 +20,12 @@ const DBDOWN = 'civicrm_downloads';
 // Forum database (http://forum.civicrm.org)
 const DBFORUM = 'civicrm_forum';
 
-const DATESTART = '2004-12-07 06:13:00'; // Date of the start of the project (from JIRA)
+// Date of the start of the project (from JIRA)
+const DATESTART = '2004-12-07 06:13:00';
+
+// GitHub credentials
+define('GITHUB_USERNAME', '<username>');
+define('GITHUB_PASSWORD', '<password>');
 
 // JIRA credentials
 define('JIRA_USERNAME', '<username>');

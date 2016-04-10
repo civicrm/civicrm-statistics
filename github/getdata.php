@@ -25,7 +25,7 @@ $stm_u = $dbh->prepare("
 
 // Initialize GitHub
 $client = new GitHubClient();
-$client->setCredentials('nganivet', '6CS9kJ4drP');
+$client->setCredentials(GITHUB_USERNAME, GITHUB_PASSWORD);
 
 // Loop over each repository
 $users = array();
@@ -66,11 +66,16 @@ foreach($repos as $repo) {
 
 // Now update all user records
 echo "Updating users ...";
-echo $updated = 0;
+echo $updated = $skipped = 0;
 $query = "SELECT DISTINCT author_login FROM github_commit WHERE author_login > ''";
 foreach ($dbh->query($query) as $row) {
   $client->setPage(); // reinitialize the results pager
-  $user = $client->users->getSingleUser($row[0]);
+  try {
+    $user = $client->users->getSingleUser($row[0]);
+  } catch (Exception $e) {
+    $skipped ++;
+    continue;
+  }
   /* @var $user GitHubFullUser */
   if ($user) {
     $stm_u->bindParam(':id', $user->getId());
@@ -86,4 +91,4 @@ foreach ($dbh->query($query) as $row) {
     echo "Unknown user - login: " . $row[0] . "\n";
   }
 }
-echo " $updated updates" . PHP_EOL;
+echo " $updated updates, $skipped in error." . PHP_EOL;
