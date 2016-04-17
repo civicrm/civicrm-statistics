@@ -66,7 +66,7 @@ foreach($repos as $repo) {
 
 // Now update all user records
 echo "Updating users ...";
-echo $updated = $skipped = 0;
+$updated = $skipped = 0;
 $query = "SELECT DISTINCT author_login FROM github_commit WHERE author_login > ''";
 foreach ($dbh->query($query) as $row) {
   $client->setPage(); // reinitialize the results pager

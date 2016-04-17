@@ -10,8 +10,8 @@ $stm_id = $dbh->prepare("
   DELETE FROM jira_issue WHERE issue=:issue
 ");
 $stm_ii = $dbh->prepare("
-  INSERT INTO jira_issue (jira_id, project, issue, summary, type, priority, reporter, assignee, status, resolution, created, updated, resolved)
-  VALUES (:jira_id, :project, :issue, :summary, :type, :priority, :reporter, :assignee, :status, :resolution, :created, :updated, :resolved);
+  INSERT INTO jira_issue (jira_id, project, issue, summary, type, priority, security, reporter, assignee, status, resolution, created, updated, resolved)
+  VALUES (:jira_id, :project, :issue, :summary, :type, :priority, :security, :reporter, :assignee, :status, :resolution, :created, :updated, :resolved);
 ");
 $stm_vd = $dbh->prepare("
   DELETE FROM jira_version WHERE issue=:issue;
@@ -51,6 +51,8 @@ foreach ($projects as $project) {
     $stm_ii->bindParam(':type', $issueType['name']);
     $priority = $issue->getPriority();
     $stm_ii->bindParam(':priority', $priority['name']);
+    $security = $issue->get('Security Level');
+    $stm_ii->bindValue(':security', $security ? $security['name'] : NULL);
     $reporter = $issue->getReporter();
     $stm_ii->bindParam(':reporter', $reporter['name']);
     $assignee = $issue->getAssignee();

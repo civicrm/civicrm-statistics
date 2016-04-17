@@ -602,6 +602,7 @@ CREATE TABLE IF NOT EXISTS `jira_issue` (
   `summary` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   `priority` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `security` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reporter` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `assignee` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
@@ -610,17 +611,18 @@ CREATE TABLE IF NOT EXISTS `jira_issue` (
   `updated` datetime DEFAULT NULL,
   `resolved` datetime DEFAULT NULL,
   PRIMARY KEY (`jira_id`),
+  KEY `project` (`project`),
   UNIQUE KEY `issue` (`issue`),
-  KEY `created` (`created`),
-  KEY `resolved` (`resolved`),
+  KEY `type` (`type`),
+  KEY `priority` (`priority`),
+  KEY `security` (`security`),
   KEY `reporter` (`reporter`),
   KEY `assignee` (`assignee`),
   KEY `status` (`status`),
   KEY `resolution` (`resolution`),
-  KEY `type` (`type`),
-  KEY `priority` (`priority`),
-  KEY `project` (`project`),
-  KEY `updated` (`updated`)
+  KEY `created` (`created`),
+  KEY `updated` (`updated`),
+  KEY `resolved` (`resolved`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
