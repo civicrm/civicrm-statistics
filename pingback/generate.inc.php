@@ -60,10 +60,10 @@ $queries[] = array(
   'file' => 'active-sites-server-country.json',
   'archive' => 'monthly',
   'query' => "
-      SELECT geoip_country AS country, c.iso2, c.iso3, COUNT(*) AS num_sites
+      SELECT c.name AS country, geoip_isoCode, c.iso3, COUNT(*) AS num_sites
         FROM pingback_site s
-             LEFT JOIN common_country c ON c.name = geoip_country
-   	   WHERE is_active = 1 AND geoip_country IS NOT NULL
+             LEFT JOIN common_country c ON c.iso2 = geoip_isoCode
+   	   WHERE is_active = 1 AND geoip_isoCode IS NOT NULL
        GROUP BY country
       HAVING num_sites > 10 -- privacy: do not report marginal countries
        ORDER BY num_sites DESC
