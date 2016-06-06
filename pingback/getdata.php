@@ -91,13 +91,12 @@ VALUES ('$cohort', '$month', (
 $dbh->query("TRUNCATE pingback_extension");
 $query = "
 INSERT INTO pingback_extension
-  (`name`, `num_sites`)
-  SELECT e.name, COUNT(*) AS num_sites
+  (`name`, `site_id`)
+  SELECT e.name, s.id
     FROM pingback_site s
          LEFT JOIN " . DBPING . ".extensions e ON e.stat_id = s.last_ping_id AND e.enabled = 1
    WHERE s.is_active = 1
          AND LENGTH(e.name) > 2 AND e.name NOT LIKE 'org.civicrm.component%'
-   GROUP BY e.name
    ";
 $dbh->query($query);
 $result = $dbh->query("SELECT COUNT(*) FROM pingback_extension")->fetch();

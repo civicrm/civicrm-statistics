@@ -617,19 +617,6 @@ CREATE TABLE IF NOT EXISTS `jira_version` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pingback_extension`
---
-
-DROP TABLE IF EXISTS `pingback_extension`;
-CREATE TABLE IF NOT EXISTS `pingback_extension` (
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `num_sites` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pingback_site`
 --
 
@@ -675,6 +662,20 @@ CREATE TABLE IF NOT EXISTS `pingback_cohort` (
   `month` char(7) COLLATE ascii_bin NOT NULL,
   `num_sites` int(11) unsigned NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=ascii COLLATE=ascii_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pingback_extension`
+--
+
+DROP TABLE IF EXISTS `pingback_extension`;
+CREATE TABLE IF NOT EXISTS `pingback_extension` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `site_id` int(11) unsigned DEFAULT NULL,
+  KEY `name` (`name`),
+  KEY `site_id` (`site_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -729,6 +730,22 @@ CREATE TABLE IF NOT EXISTS `stackexchange_users` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `extensions_dir`
+--
+
+DROP TABLE IF EXISTS `extensions_dir`;
+CREATE TABLE IF NOT EXISTS `extensions_dir` (
+  `nid`  INT(10) NOT NULL,
+  `title` varchar(255) CHARACTER SET ascii NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fq_name` varchar(255) CHARACTER SET ascii NOT NULL,
+  `git_url` varchar(255) CHARACTER SET ascii NOT NULL,
+  PRIMARY KEY (`nid`),
+  KEY `fq_name` (`fq_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

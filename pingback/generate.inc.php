@@ -117,7 +117,7 @@ $queries[] = array(
   'file' => 'extensions-stats.json',
   'archive' => 'monthly',
   'query' => "
-      SELECT COUNT(*) AS num_extensions, SUM(num_sites) AS num_installs
+      SELECT COUNT(UNIQUE `name`) AS num_extensions, COUNT(*) AS num_installs
         FROM pingback_extension
   ",
 );
@@ -125,7 +125,9 @@ $queries[] = array(
   'file' => 'extensions-detail.json',
   'archive' => 'weekly, monthly',
   'query' => "
-      SELECT * FROM pingback_extension
+      SELECT name, COUNT(*) as num_sites
+        FROM pingback_extension
+       GROUP BY name
        ORDER BY num_sites DESC
        LIMIT 50 -- privacy: only report on top (ie. public) extensions
   ",
