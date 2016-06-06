@@ -12,9 +12,11 @@ foreach ($files as $file) {
   require_once($file);
 }
 
-// Create target directory if non existent
-if (!file_exists($directory)) {
-  mkdir($directory);
+// Create target directories if non existent
+foreach (array($directory, "$directory/ext") as $dir) {
+  if (!file_exists($dir)) {
+    mkdir($dir);
+  }
 }
 
 // Run the queries and generate target file
@@ -22,10 +24,19 @@ foreach ($queries as $query) {
   echo "Creating $query[file] ...";
   $count = 0;
   $out = '[';
-  foreach($dbh->query($query['query'], PDO::FETCH_ASSOC) as $row) {
+  foreach ($dbh->query($query['query'], PDO::FETCH_ASSOC) as $row) {
+    if (isset($query['subqueries'])) {
+      foreach ($query['subqueries'] as $attr => $subquery) {
+        $row[$attr] = array();
+        foreach ($dbh->query($subquery, PDO::FETCH_ASSOC) as $subrow) {
+          $row[$attr][] = $subrow;
+        }
+      }
+    }
     $out .= json_encode($row) . ',';
     $count ++;
   }
+
   $out[strlen($out)-1] = ']';
   file_put_contents($directory . '/' . $query['file'], $out);
   echo " ($count records)" . PHP_EOL;

@@ -30,3 +30,8 @@ define('GITHUB_PASSWORD', '<password>');
 // JIRA credentials
 define('JIRA_USERNAME', '<username>');
 define('JIRA_PASSWORD', '<password>');
+
+// civicrm.org credentials
+define('CO_CIVIURL', '<civiurl>');
+define('CO_USERKEY', '<userkey>');
+define('CO_SITEKEY', '<sitekey>');
