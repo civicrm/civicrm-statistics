@@ -5,7 +5,7 @@ require_once('config.php');
 $alerts = array(
   array(
     'recipients' => array('civicrm-secteam@lists.civicrm.org'),
-    'subject' => '[CiviCRM] Weekly security issues recap',
+    'subject' => 'Weekly CiviCRM security issues recap',
     'query' => "
       SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
              priority, status, assignee
@@ -17,7 +17,7 @@ $alerts = array(
   ),
   array(
     'recipients' => array('civicrm-dev@lists.civicrm.org'),
-    'subject' => '[CiviCRM] Weekly CiviCRM issues recap',
+    'subject' => 'Weekly CiviCRM critical issues recap',
     'query' => "
       SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
              priority, status, assignee
@@ -25,7 +25,7 @@ $alerts = array(
        WHERE priority <= 'Critical' AND status != 'Closed' AND security IS NULL
        ORDER BY priority, jira_id
        ",
-    'template' => 'security.twig',
+    'template' => 'critical.twig',
   ),
 );
 
