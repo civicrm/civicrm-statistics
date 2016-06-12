@@ -4,8 +4,8 @@ require_once('config.php');
 
 $alerts = array(
   array(
-    'recipients' => array('nicolas@cividesk.com'),
-    'subject' => '[CiviCRM] Weekly security issues status',
+    'recipients' => array('civicrm-secteam@lists.civicrm.org'),
+    'subject' => '[CiviCRM] Weekly security issues recap',
     'query' => "
       SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
              priority, status, assignee
@@ -16,8 +16,8 @@ $alerts = array(
     'template' => 'security.twig',
   ),
   array(
-    'recipients' => array('nicolas@cividesk.com'),
-    'subject' => '[CiviCRM] Weekly CiviCRM issues status',
+    'recipients' => array('civicrm-dev@lists.civicrm.org'),
+    'subject' => '[CiviCRM] Weekly CiviCRM issues recap',
     'query' => "
       SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
              priority, status, assignee
@@ -55,7 +55,8 @@ foreach ($alerts as $alert) {
   // Compose and send the email
   $message = Swift_Message::newInstance()
     ->setSubject($alert['subject'])
-    ->setFrom(array('info@civicrm.org' => 'CiviCRM'))
+    // Need to use a From: email address authorized to all lists
+    ->setFrom(array('nicolas@cividesk.com' => 'CiviCRM (no replies)'))
     ->setTo($alert['recipients'])
     ->setBody($body, 'text/html');
   $mailer->send($message);
