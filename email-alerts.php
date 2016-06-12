@@ -7,9 +7,23 @@ $alerts = array(
     'recipients' => array('nicolas@cividesk.com'),
     'subject' => '[CiviCRM] Weekly security issues status',
     'query' => "
-      SELECT issue, summary, priority, SUBSTRING(security, 12) as security, resolution, assignee
+      SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
+             priority, status, assignee
         FROM jira_issue
-       WHERE status = 'Open' AND security IS NOT NULL
+       WHERE status != 'Closed' AND security IS NOT NULL
+       ORDER BY priority, jira_id
+       ",
+    'template' => 'security.twig',
+  ),
+  array(
+    'recipients' => array('nicolas@cividesk.com'),
+    'subject' => '[CiviCRM] Weekly CiviCRM issues status',
+    'query' => "
+      SELECT issue, CONCAT('https://issues.civicrm.org/jira/browse/', issue) AS issue_url, summary,
+             priority, status, assignee
+        FROM jira_issue
+       WHERE priority <= 'Critical' AND status != 'Closed' AND security IS NULL
+       ORDER BY priority, jira_id
        ",
     'template' => 'security.twig',
   ),
