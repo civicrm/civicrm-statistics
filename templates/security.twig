@@ -1,0 +1,20 @@
+<p>Hi security team,</p>
+
+<p>This is your weekly recap of all open security issues. Let's work on closing these issues!</p>
+
+<table>
+    {% for item in results %}
+    <tr>
+        <td align="right">{{ item.issue }}</td>
+        <td colspan=3>{{ item.summary }} </td>
+    </tr><tr>
+        <td align="right">{{ item.priority }}</td>
+        <td>{{ item.security }}</td>
+        <td>{{ item.resolution }}</td>
+        <td>{{ item.assignee }}</td>
+    </tr>
+    {% endfor %}
+ </table>
+
+<p>Cheers!<br/>
+<pre>--<a href="'https://stats.civicrm.org">stats.civicrm.org</a></pre></p>

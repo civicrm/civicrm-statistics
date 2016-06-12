@@ -2,6 +2,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "chobie/jira-api-restclient": "2.0.*"
+    "chobie/jira-api-restclient": "2.0.*",
+    "swiftmailer/swiftmailer": "@stable",
+    "twig/twig": "~1.0"
   }
 }
