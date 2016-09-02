@@ -22,7 +22,7 @@ if ($result->items) {
 
 // Get civicrm SE site users
 $dbh->query("TRUNCATE stackexchange_users");
-$url = "https://api.stackexchange.com/2.2/users?site=civicrm&pagesize=100";
+$url = "https://api.stackexchange.com/2.2/users?site=civicrm&pagesize=100"; // Max pagezise is 100: https://api.stackexchange.com/docs/paging
 $fields = $se_fields['users'];
 $page = 1; $count = 1;
 do {
@@ -34,6 +34,8 @@ do {
       if (substr($field, 0, 6) == 'badges') {
         $badge = substr($field, 7);
         $line[$field] = $item->badge_counts->$badge;
+      } elseif (substr($field, -5) == '_date') {
+        $line[$field] = "FROM_UNIXTIME({$item->$field})";
       } elseif (isset($item->$field)) {
         $line[$field] = is_numeric($item->$field) ? $item->$field : $dbh->quote($item->$field);
       } else

@@ -717,11 +717,18 @@ CREATE TABLE IF NOT EXISTS `stackexchange_history` (
 
 DROP TABLE IF EXISTS `stackexchange_users`;
 CREATE TABLE IF NOT EXISTS `stackexchange_users` (
+  `user_id`  INT(10) NOT NULL,
   `account_id`  INT(10) NOT NULL,
   `display_name` VARCHAR(64) NOT NULL,
   `user_type` VARCHAR(32) NOT NULL,
   `location` VARCHAR(255) NULL,
+  `creation_date` DATE NOT NULL,
+  `last_access_date` DATE NOT NULL,
   `reputation` INT(10) NOT NULL,
+  `reputation_change_week`  INT(10) NOT NULL,
+  `reputation_change_month`  INT(10) NOT NULL,
+  `reputation_change_quarter`  INT(10) NOT NULL,
+  `reputation_change_year`  INT(10) NOT NULL,
   `accept_rate` INT(10) NULL,
   `badges_gold` INT(10) NOT NULL,
   `badges_silver` INT(10) NOT NULL,
