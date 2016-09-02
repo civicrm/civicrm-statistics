@@ -91,4 +91,14 @@ foreach ($dbh->query($query) as $row) {
     echo "Unknown user - login: " . $row[0] . "\n";
   }
 }
+$query = "
+  UPDATE github_user
+     SET first_commit = (
+           SELECT MIN(author_date)
+             FROM github_commit
+            WHERE author_login = login
+           )
+    WHERE first_commit IS NULL;
+    ";
+$dbh->query($query);
 echo " $updated updates, $skipped in error." . PHP_EOL;

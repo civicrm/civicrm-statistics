@@ -559,6 +559,7 @@ CREATE TABLE IF NOT EXISTS `github_user` (
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `location` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `avatar_url` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `first_commit` DATETIME,
   PRIMARY KEY (`login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
