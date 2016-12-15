@@ -82,6 +82,19 @@ $queries[] = array(
   ",
 );
 $queries[] = array(
+  'file' => 'active-sites-civi-php.json',
+  'archive' => 'monthly',
+  'query' => "
+      SELECT LEFT(version, LOCATE('.', version, 4) - 1) AS civi_version,
+             LEFT(PHP, LOCATE('.', PHP, 4) - 1) AS php_version,
+             COUNT(*) AS num_sites
+        FROM pingback_site
+       WHERE is_active = 1
+       GROUP BY civi_version, php_version
+       ORDER BY civi_version, php_version
+  ",
+);
+$queries[] = array(
   'file' => 'active-sites-server-mysql.json',
   'archive' => 'monthly',
   'query' => "
