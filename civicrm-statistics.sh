@@ -18,6 +18,7 @@ done
 
 # Regenerate statistics and push to destination
 php generate.php
+php historical.php
 rsync -a json $DEST
 # create .htaccess to allow access from anywhere (cf. CORS for $.getJSON)
 echo 'Header add Access-Control-Allow-Origin "*"' > $DEST/.htaccess
