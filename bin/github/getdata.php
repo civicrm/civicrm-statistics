@@ -48,16 +48,19 @@ foreach($repos as $repo) {
       /* @var $commit GitHubCommit */
 
       // Write commit to database
-      $stm_c->bindParam(':hash', $commit->getSha());
+      $hash = $commit->getSha();
+      $stm_c->bindParam(':hash', $hash);
       $author_login = ($commit->getAuthor() ? $commit->getAuthor()->getLogin() : '');
       $stm_c->bindParam(':author_login', $author_login);
-      $stm_c->bindParam(':author_date', $commit->getCommit()->getAuthor()->getDate());
+      $author_date = $commit->getCommit()->getAuthor()->getDate();
+      $stm_c->bindParam(':author_date', $author_date);
       $committer_login = ($commit->getCommitter() ? $commit->getCommitter()->getLogin() : '');
       $stm_c->bindParam(':committer_login', $committer_login);
-      $stm_c->bindParam(':committer_date', $commit->getCommit()->getCommitter()->getDate());
-      $stm_c->bindParam(':message', $commit->getCommit()->getMessage());
-      $stm_c->execute();
-      $new_commits++;
+      $committer_date = $commit->getCommit()->getCommitter()->getDate();
+      $stm_c->bindParam(':committer_date', $committer_date);
+      $message = $commit->getCommit()->getMessage();
+      $stm_c->bindParam(':message', $message);
+      if ($stm_c->execute()) $new_commits++;
     }
     $commits = $client->getNextPage();
   }
