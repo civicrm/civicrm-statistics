@@ -1,4 +1,6 @@
 /.idea
-/vendor
-/json
-/config.php
+/bin/vendor
+/bin/config.php
+/bin/json
+/public/json
+/archive
