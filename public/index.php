@@ -7,7 +7,7 @@ $tabs = array(
   'issues' => array('title' => 'Issues tracking', 'iframe' => "https://app.klipfolio.com/published/2ef307a2fe4ddcf05826ee84ecc6bdb8/issues-tracking"),
 );
 $tab = reset(array_keys($tabs));
-if (!empty($_REQUEST['tab']) || in_array($_REQUEST['tab'], array_keys($tabs))) {
+if (isset($_REQUEST['tab']) && in_array($_REQUEST['tab'], array_keys($tabs))) {
   $tab = $_REQUEST['tab'];
 }
 ?>
