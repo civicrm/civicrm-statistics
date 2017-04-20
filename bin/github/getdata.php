@@ -32,7 +32,6 @@ $users = array();
 foreach($repos as $repo) {
   echo "Repository $repo ...";
   $new_commits = 0;
-  $stm_c->bindParam(':repository', $repo);
 
   // Get last commit date in database
   $result = $dbh->query("SELECT MAX(author_date) FROM github_commit WHERE repository='$repo';")->fetch();
@@ -45,22 +44,21 @@ foreach($repos as $repo) {
   // Loop over each commit (paged)
   while (sizeof($commits)) {
     foreach($commits as $commit) {
-      /* @var $commit GitHubCommit */
-
-      // Write commit to database
-      $hash = $commit->getSha();
-      $stm_c->bindParam(':hash', $hash);
-      $author_login = ($commit->getAuthor() ? $commit->getAuthor()->getLogin() : '');
-      $stm_c->bindParam(':author_login', $author_login);
-      $author_date = $commit->getCommit()->getAuthor()->getDate();
-      $stm_c->bindParam(':author_date', $author_date);
-      $committer_login = ($commit->getCommitter() ? $commit->getCommitter()->getLogin() : '');
-      $stm_c->bindParam(':committer_login', $committer_login);
-      $committer_date = $commit->getCommit()->getCommitter()->getDate();
-      $stm_c->bindParam(':committer_date', $committer_date);
-      $message = $commit->getCommit()->getMessage();
-      $stm_c->bindParam(':message', $message);
-      if ($stm_c->execute()) $new_commits++;
+      $params = array(
+        ':repository' => $repo,
+        ':hash' => $commit->getSha(),
+        ':author_login' => ($commit->getAuthor() ? $commit->getAuthor()->getLogin() : ''),
+        ':author_date' => str_replace(array('T','Z'), ' ', $commit->getCommit()->getAuthor()->getDate()),
+        ':committer_login' => ($commit->getCommitter() ? $commit->getCommitter()->getLogin() : ''),
+        ':committer_date' => str_replace(array('T','Z'), ' ', $commit->getCommit()->getCommitter()->getDate()),
+        ':message' => substr($commit->getCommit()->getMessage(), 0, 1000),
+      );
+      if ($stm_c->execute($params)) {
+        $new_commits++;
+      } else {
+        $errorInfo = $stm_c->errorInfo();
+        echo $errorInfo[2] . PHP_EOL;
+      }
     }
     $commits = $client->getNextPage();
   }
@@ -81,15 +79,21 @@ foreach ($dbh->query($query) as $row) {
   }
   /* @var $user GitHubFullUser */
   if ($user) {
-    $stm_u->bindParam(':id', $user->getId());
-    $stm_u->bindParam(':login', $user->getLogin());
-    $stm_u->bindParam(':name', $user->getName());
-    $stm_u->bindParam(':company', $user->getCompany());
-    $stm_u->bindParam(':email', $user->getEmail());
-    $stm_u->bindParam(':location', $user->getLocation());
-    $stm_u->bindParam(':avatar_url', $user->getAvatarUrl());
-    $stm_u->execute();
-    $updated ++;
+    $params = array(
+      ':id' => $user->getId(),
+      ':login' => $user->getLogin(),
+      ':name' => $user->getName(),
+      ':company' => $user->getCompany(),
+      ':email' => $user->getEmail(),
+      ':location' => $user->getLocation(),
+      ':avatar_url' => $user->getAvatarUrl(),
+    );
+    if ($stm_u->execute($params)) {
+      $updated ++;;
+    } else {
+      $errorInfo = $stm_u->errorInfo();
+      echo $errorInfo[2] . PHP_EOL;
+    }
   } else {
     echo "Unknown user - login: " . $row[0] . "\n";
   }

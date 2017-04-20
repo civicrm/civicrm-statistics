@@ -554,11 +554,11 @@ DROP TABLE IF EXISTS `github_user`;
 CREATE TABLE IF NOT EXISTS `github_user` (
   `id` int(11) NOT NULL,
   `login` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `company` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `location` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `avatar_url` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `company` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `location` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar_url` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `first_commit` DATETIME DEFAULT NULL,
   PRIMARY KEY (`login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
