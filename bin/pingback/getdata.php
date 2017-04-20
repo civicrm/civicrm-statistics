@@ -99,7 +99,7 @@ INSERT INTO pingback_extension
          AND LENGTH(e.name) > 2 AND e.name NOT LIKE 'org.civicrm.component%'
    ";
 $dbh->query($query);
-$result = $dbh->query("SELECT COUNT(*) FROM pingback_extension")->fetch();
+$result = $dbh->query("SELECT COUNT(DISTINCT `name`) FROM pingback_extension")->fetch();
 echo "Unique active extensions: $result[0]" . PHP_EOL;
-$result = $dbh->query("SELECT SUM(num_sites) FROM pingback_extension")->fetch();
+$result = $dbh->query("SELECT COUNT(*) FROM pingback_extension")->fetch();
 echo "Total enabled extensions: $result[0]" . PHP_EOL;
