@@ -40,50 +40,49 @@ foreach ($projects as $project) {
   $count = 0;
   foreach ($walker as $k => $issue) {
     // Clean-up if we already had this issue in the database
-    $stm_id->bindParam(':issue', $issue->getKey());
-    $stm_id->execute();   
+    $stm_id->execute(array(':issue' => $issue->getKey()));
     // Create or Update the issue itself
-    $stm_ii->bindParam(':jira_id', $issue->getId());
-    $stm_ii->bindParam(':project', $project);
-    $stm_ii->bindParam(':issue', $issue->getKey());
-    $stm_ii->bindParam(':summary', $issue->getSummary());
     $issueType = $issue->getIssueType();
-    $stm_ii->bindParam(':type', $issueType['name']);
     $priority = $issue->getPriority();
-    $stm_ii->bindParam(':priority', $priority['name']);
     $security = $issue->get('Security Level');
-    $stm_ii->bindValue(':security', $security ? $security['name'] : NULL);
     $reporter = $issue->getReporter();
-    $stm_ii->bindParam(':reporter', $reporter['name']);
     $assignee = $issue->getAssignee();
-    $stm_ii->bindParam(':assignee', $assignee['name']);
     $status = $issue->getStatus();
-    $stm_ii->bindParam(':status', $status['name']);
     $resolution = $issue->getResolution();
-    $stm_ii->bindParam(':resolution', $resolution['name']);
-    $stm_ii->bindParam(':created', $issue->getCreated());
-    $stm_ii->bindParam(':updated', $issue->getUpdated());
-    $stm_ii->bindParam(':resolved', $issue->get('Resolved'));
-    $stm_ii->execute();
+    $params = array(
+      ':jira_id' => $issue->getId(),
+      ':project' => $project,
+      ':issue' => $issue->getKey(),
+      ':summary' => substr($issue->getSummary(), 0, 128),
+      ':type' => $issueType['name'],
+      ':priority' => $priority['name'],
+      ':security' => ($security ? $security['name'] : NULL),
+      ':reporter' => $reporter['name'],
+      ':assignee' => $assignee['name'],
+      ':status' => $status['name'],
+      ':resolution' => $resolution['name'],
+      ':created' => date('Y-m-d H:i:s', strtotime($issue->getCreated())),
+      ':updated' => date('Y-m-d H:i:s', strtotime($issue->getUpdated())),
+      ':resolved' => date('Y-m-d H:i:s', strtotime($issue->get('Resolved'))),
+    );
+    if (!$stm_ii->execute($params)) {
+      $errorInfo = $stm_ii->errorInfo();
+      echo $errorInfo[2] . PHP_EOL;
+    }
 
     // Clean-up if we already had this issue in the database
-    $stm_vd->bindParam(':issue', $issue->getKey());
-    $stm_vd->execute();
+    $stm_vd->execute(array(':issue' => $issue->getKey()));
     // Create or Update the affects and fix version references
-    $stm_vi->bindParam(':issue', $issue->getKey());
-    $type = 'Affects';
-    $stm_vi->bindParam(':type', $type);
-    $affects = $issue->get('Affects Version/s');
-    foreach ($affects as $version) {
-      $stm_vi->bindParam(':version', $version['name']);
-      $stm_vi->execute();
-    }
-    $type = 'Fix';
-    $stm_vi->bindParam(':type', $type);
-    $fixes = $issue->get('Fix Version/s');
-    foreach ($fixes as $version) {
-      $stm_vi->bindParam(':version', $version['name']);
-      $stm_vi->execute();
+    foreach (array('Affects', 'Fix') as $type) {
+      $params = array(
+        ':issue' => $issue->getKey(),
+        ':type' => $type,
+      );
+      $versions = $issue->get("$type Version/s");
+      foreach ($versions as $version) {
+        $params[':version'] = $version['name'];
+        $stm_vi->execute($params);
+      }
     }
 
     // Limit as otherwise the walker goes through the whole database

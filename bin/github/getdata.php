@@ -48,9 +48,9 @@ foreach($repos as $repo) {
         ':repository' => $repo,
         ':hash' => $commit->getSha(),
         ':author_login' => ($commit->getAuthor() ? $commit->getAuthor()->getLogin() : ''),
-        ':author_date' => str_replace(array('T','Z'), ' ', $commit->getCommit()->getAuthor()->getDate()),
+        ':author_date' => date('Y-m-d H:i:s', strtotime($commit->getCommit()->getAuthor()->getDate())),
         ':committer_login' => ($commit->getCommitter() ? $commit->getCommitter()->getLogin() : ''),
-        ':committer_date' => str_replace(array('T','Z'), ' ', $commit->getCommit()->getCommitter()->getDate()),
+        ':committer_date' => date('Y-m-d H:i:s', strtotime($commit->getCommit()->getCommitter()->getDate())),
         ':message' => substr($commit->getCommit()->getMessage(), 0, 1000),
       );
       if ($stm_c->execute($params)) {

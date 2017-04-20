@@ -7,7 +7,8 @@
  * - full privileges on the DBNAME database
  * - read privileges on all other databases
  */
- 
+date_default_timezone_set('UTC');
+
 const DBHOST = 'localhost';
 const DBNAME = 'stats_central';
 const DBUSER = '<username>';
