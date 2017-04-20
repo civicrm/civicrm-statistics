@@ -13,7 +13,6 @@ $api = new civicrm_api3(array(
 ));
 if (!$api->ExtensionDir->Get()) {
   echo 'Unable to retrieve ExtensionDir: ' . $api->errorMsg() . PHP_EOL;
-  exit;
 };
 
 // Save in database, replacing existing data
@@ -26,9 +25,14 @@ $count = 0;
 foreach ($api->values() as $row) {
   $stm->bindValue(':nid', $row->nid, PDO::PARAM_INT);
   $stm->bindValue(':title', $row->title, PDO::PARAM_STR);
-  $stm->bindValue(':created', $row->created, PDO::PARAM_INT);
+  $stm->bindValue(':created', date('Y-m-d H:i:s', $row->created), PDO::PARAM_INT);
   $stm->bindValue(':fq_name', $row->fq_name, PDO::PARAM_STR);
   $stm->bindValue(':git_url', $row->git_url, PDO::PARAM_STR);
-  if ($stm->execute()) $count++;
+  if ($stm->execute()) {
+    $count++;
+  } else {
+    $errorInfo = $stm->errorInfo();
+    echo $errorInfo[2] . PHP_EOL;
+  }
 }
 echo "$count CiviCRM-native extensions found in the Extensions Directory." . PHP_EOL;
