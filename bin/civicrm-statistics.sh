@@ -25,7 +25,7 @@ rsync -a json/ $DEST/
 echo 'Header add Access-Control-Allow-Origin "*"' > $DEST/.htaccess
 
 # and also archive (will someday be useful one way or another ...)
-cp -R json $ARCH/ `date +%F`
+cp -R json $ARCH/`date +%F`
 
 # For the log file
 echo --- Done ---
