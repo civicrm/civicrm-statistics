@@ -40,7 +40,10 @@ foreach ($projects as $project) {
   $count = 0;
   foreach ($walker as $k => $issue) {
     // Clean-up if we already had this issue in the database
-    $stm_id->execute(array(':issue' => $issue->getKey()));
+    $params = array(
+      ':issue' => $issue->getKey(),
+    );
+    $stm_id->execute($params);
     // Create or Update the issue itself
     $issueType = $issue->getIssueType();
     $priority = $issue->getPriority();

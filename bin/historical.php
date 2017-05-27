@@ -1,5 +1,8 @@
 <?php
 $historical = __DIR__ . '/json/historical';
+if (!is_dir($historical)) {
+  mkdir($historical);
+}
 chdir(__DIR__ . '/../archive/');
 
 $reports = array(

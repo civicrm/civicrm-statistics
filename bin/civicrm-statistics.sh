@@ -1,5 +1,6 @@
 #! /bin/bash
-DEST=/var/www/stats.civicrm.org/public/
+DEST=/var/www/stats.civicrm.org/public
+ARCH=/var/www/stats.civicrm.org/archive
 
 # For the log file
 echo "--- CiviCRM Statistics run on `date` ---"
@@ -19,12 +20,12 @@ done
 # Regenerate statistics and push to destination
 php generate.php
 php historical.php
-rsync -a json $DEST
+rsync -a json/ $DEST/
 # create .htaccess to allow access from anywhere (cf. CORS for $.getJSON)
 echo 'Header add Access-Control-Allow-Origin "*"' > $DEST/.htaccess
 
 # and also archive (will someday be useful one way or another ...)
-cp -R json /var/www/stats.civicrm.org/archive/`date +%F`
+cp -R json $ARCH/ `date +%F`
 
 # For the log file
 echo --- Done ---

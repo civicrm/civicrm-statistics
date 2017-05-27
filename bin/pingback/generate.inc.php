@@ -130,7 +130,7 @@ $queries[] = array(
   'file' => 'extensions-stats.json',
   'archive' => 'monthly',
   'query' => "
-      SELECT COUNT(UNIQUE `name`) AS num_extensions, COUNT(*) AS num_installs
+      SELECT COUNT(DISTINCT(`name`)) AS num_extensions, COUNT(*) AS num_installs
         FROM pingback_extension
   ",
 );

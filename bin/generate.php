@@ -1,22 +1,24 @@
 <?php
 require_once('config.php');
 $directory = __DIR__ . '/json';
+foreach (array($directory, "$directory/ext") as $dir) {
+  if (!file_exists($dir)) {
+    mkdir($dir);
+  }
+}
 
 // Initialize database
 $dbh = new PDO('mysql:dbname='.DBNAME.';host='.DBHOST, DBUSER, DBPASS);
+
+// Remove the ONLY_FULL_GROUP_BY flag from SQL mode (MySQL 5.7.5 onwards)
+// cf. https://stackoverflow.com/questions/37951742/1055-expression-of-select-list-is-not-in-group-by-clause-and-contains-nonaggr
+$dbh->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 
 // Initialize the queries array from each subdirectories' include file
 $queries = array();
 $files = glob_recursive('generate.inc.php');
 foreach ($files as $file) {
   require_once($file);
-}
-
-// Create target directories if non existent
-foreach (array($directory, "$directory/ext") as $dir) {
-  if (!file_exists($dir)) {
-    mkdir($dir);
-  }
 }
 
 // Run the queries and generate target file
