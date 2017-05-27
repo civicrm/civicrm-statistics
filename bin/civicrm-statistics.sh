@@ -20,12 +20,14 @@ done
 # Regenerate statistics and push to destination
 php generate.php
 php historical.php
-rsync -a json/ $DEST/
+# ATTENTION: the / at the end of json/ is voluntarily ommitted!
+rsync -a json $DEST
 # create .htaccess to allow access from anywhere (cf. CORS for $.getJSON)
 echo 'Header add Access-Control-Allow-Origin "*"' > $DEST/.htaccess
 
 # and also archive (will someday be useful one way or another ...)
-cp -R json $ARCH/`date +%F`
+# ATTENTION: the / at the end of json/ is needed!
+rsync -a json/ $ARCH/`date +%F`
 
 # For the log file
 echo --- Done ---
