@@ -672,10 +672,11 @@ CREATE TABLE IF NOT EXISTS `pingback_cohort` (
 
 DROP TABLE IF EXISTS `pingback_extension`;
 CREATE TABLE IF NOT EXISTS `pingback_extension` (
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `site_id` int(11) unsigned DEFAULT NULL,
-  KEY `name` (`name`),
-  KEY `site_id` (`site_id`)
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `version` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  KEY `site_id` (`site_id`),
+  KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------

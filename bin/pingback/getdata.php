@@ -91,8 +91,8 @@ VALUES ('$cohort', '$month', (
 $dbh->query("TRUNCATE pingback_extension");
 $query = "
 INSERT INTO pingback_extension
-  (`name`, `site_id`)
-  SELECT e.name, s.id
+  (`name`, `site_id`, `version`)
+  SELECT e.name, s.id, e.version
     FROM pingback_site s
          LEFT JOIN " . DBPING . ".extensions e ON e.stat_id = s.last_ping_id AND e.enabled = 1
    WHERE s.is_active = 1

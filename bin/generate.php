@@ -30,8 +30,10 @@ foreach ($queries as $query) {
     if (isset($query['subqueries'])) {
       foreach ($query['subqueries'] as $attr => $subquery) {
         $row[$attr] = array();
-        foreach ($dbh->query($subquery, PDO::FETCH_ASSOC) as $subrow) {
-          $row[$attr][] = $subrow;
+        if ($subresults = $dbh->query($subquery, PDO::FETCH_ASSOC)) {
+          foreach ($subresults as $subrow) {
+            $row[$attr][] = $subrow;
+          }
         }
       }
     }
