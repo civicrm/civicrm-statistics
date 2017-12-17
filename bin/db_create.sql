@@ -643,6 +643,8 @@ CREATE TABLE IF NOT EXISTS `pingback_site` (
   `Contact` int(11) unsigned DEFAULT NULL,
   `Contribution` int(11) unsigned DEFAULT NULL,
   `Participant` int(11) unsigned DEFAULT NULL,
+  `Mailing` int(11) unsigned DEFAULT NULL,
+  `Delivered` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `hash` (`hash`),
   KEY `first_timestamp` (`first_timestamp`),
@@ -650,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `pingback_site` (
   KEY `last_timestamp` (`last_timestamp`),
   KEY `is_active` (`is_active`),
   KEY `DB` (`DB`)
-) ENGINE=MyISAM  DEFAULT CHARSET=ascii COLLATE=ascii_bin AUTO_INCREMENT=120191 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=ascii COLLATE=ascii_bin;
 
 -- --------------------------------------------------------
 

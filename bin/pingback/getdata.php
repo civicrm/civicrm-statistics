@@ -15,20 +15,22 @@ INSERT INTO pingback_site
   (`hash`, `version`, `lang`, `uf`, `ufv`, `civi_country`,
    `geoip_isoCode`, `MySQL`, `PHP`,
    `first_ping_id`, `first_timestamp`, `last_ping_id`, `last_timestamp`, `num_pings`,
-   `Contact`, `Contribution`, `Participant`)
+   `Contact`, `Contribution`, `Participant`, `Mailing`, `Delivered`)
    SELECT
      hash, version, lang, uf, ufv, c.name,
      geoip_isoCode, MySQL, PHP,
      s.id, s.time, s.id, s.time, 1,
-     e1.size AS Contact, e2.size AS Contribution, e3.size as Participant
+     e1.size AS Contact, e2.size AS Contribution, e3.size as Participant, e4.size as Mailing, e5.size as Delivered
    FROM " . DBPING . ".stats s
    LEFT JOIN civicrm_country c ON c.id = s.co
    LEFT JOIN " . DBPING . ".entities e1 ON e1.stat_id = s.id AND e1.name = 'Contact'
    LEFT JOIN " . DBPING . ".entities e2 ON e2.stat_id = s.id AND e2.name = 'Contribution'
    LEFT JOIN " . DBPING . ".entities e3 ON e3.stat_id = s.id AND e3.name = 'Participant'
+   LEFT JOIN " . DBPING . ".entities e4 ON e4.stat_id = s.id AND e4.name = 'Mailing'
+   LEFT JOIN " . DBPING . ".entities e5 ON e5.stat_id = s.id AND e5.name = 'Delivered'
    WHERE s.id > $result[0]
    ORDER BY s.id ASC
-   LIMIT 30000
+   LIMIT 300000
 ON DUPLICATE KEY UPDATE
    version = s.version, lang = s.lang, uf = s.uf, ufv = s.ufv, civi_country = c.name,
    geoip_isoCode = s.geoip_isoCode, MySQL = s.MySQL, PHP = s.PHP,
