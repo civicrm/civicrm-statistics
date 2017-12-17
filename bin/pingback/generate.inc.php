@@ -51,9 +51,9 @@ $queries[] = array(
       SELECT uf, COUNT(*) AS num_sites
         FROM pingback_site
        WHERE is_active = 1
+             AND uf IN ('Drupal', 'WordPress', 'Joomla', 'Drupal6', 'Drupal8', 'Backdrop') 
        GROUP BY uf
        ORDER BY num_sites DESC
-       LIMIT 4 -- privacy: this hides the Standalone and Drupal8 data
   ",
 );
 $queries[] = array(
