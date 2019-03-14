@@ -5,6 +5,7 @@ $tabs = array(
   'sites' => array('title' => 'Active Sites', 'iframe' => "https://app.klipfolio.com/published/ab444b80434b9a91cb5f0b8f92dacf4c/active-sites"),
   'technology' => array('title' => 'Server Technologies', 'iframe' => "https://app.klipfolio.com/published/ad17065438d34cf0d4ee688245aa7bde/server-technologies"),
   'issues' => array('title' => 'Issues tracking', 'iframe' => "https://app.klipfolio.com/published/2ef307a2fe4ddcf05826ee84ecc6bdb8/issues-tracking"),
+  'financials' => array('title' => 'Project financials', 'iframe' => "https://app.klipfolio.com/published/eb905d1fb48f5d4b876ef8e907481d26/financials"),
 );
 $tab = reset(array_keys($tabs));
 if (isset($_REQUEST['tab']) && in_array($_REQUEST['tab'], array_keys($tabs))) {
@@ -103,6 +104,12 @@ if (!empty($tabs[$tab]['iframe'])) {
       <li>and where the database contains at least 10 more contacts that what is pre-loaded with the demo datasets.</li>
     </ul>
     <p>While not taking into account all possible use cases, this is certainly a very reasonable definition and the best we can do with the limited amount of information that is available to us. As a matter of comparison, most other statistics on software usage refer to the number of downloads, the number of times the software was installed (without substracting the uninstalls), or the number of users accounts ever created (regardless of their activity).</p>
+    <h3>Project Financials</h3>
+    <p>The financials tab is based on the CiviCRM Core Team's accounting and is updated monthly. It reflects the income and expenses 
+      of <a href="https://civicrm.org/core-team" alt="CiviCRM LLC">CiviCRM LLC</a>. The financials presented do not reflect those of any 
+    partner, member, end user or any other type of community member of CiviCRM.</p>
+    <p>The project financials were added on March of 2019 and will continue to evolve in order to demonstrate the financial and project-wide 
+      performance of CiviCRM.</p>
     <h3>For more information</h3>
     <p>Additional resources include:</p>
     <ul>
