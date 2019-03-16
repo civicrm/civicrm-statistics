@@ -8,6 +8,9 @@ This package's purpose is to:
 Goals 1 and 2 are realized by this code. Goal 3 is realized by leveraging the published json files from 2
  in external dashboard services such as Klipfolio or any other service capable of ingesting json.
 
+For patches and discussion, please use:  
+https://lab.civicrm.org/infrastructure/stats-collection
+
 # 1. Gather project statistics
 This is done by the 'getdata.php' scripts in each subdirectory. Thea reason these scripts are independant is that we
 might need different refresh schedules for each data source.
