@@ -91,7 +91,7 @@ $queries[] = array(
         FROM pingback_site
        WHERE is_active = 1
        GROUP BY civi_version, php_version
-       ORDER BY civi_version DESC, php_version DESC
+       ORDER BY LEFT(civi_version, 1) DESC, CAST(MID(civi_version, 3) AS SIGNED INTEGER) DESC, php_version DESC
   ",
 );
 $queries[] = array(
