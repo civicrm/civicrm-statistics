@@ -31,6 +31,16 @@ if (isset($_REQUEST['tab']) && in_array($_REQUEST['tab'], array_keys($tabs))) {
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1370005-5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-1370005-5');
+</script>
+
   </head>
   <body style="margin:20px;">
 
@@ -126,14 +136,11 @@ if (empty($tabs[$tab]['iframe'])) {
     <div class="container">
       <p style="text-align: center; margin-top: 10px;">
         The CiviCRM Statistics project is produced as part of the <a href="https://civicrm.org/marketing-team">marketing team</a> as<br/>
-        an in-kind contribution by <a href="http://www.cividesk.com">Cividesk</a>, a CiviCRM partner and contributor.<br/>
+        an in-kind contribution by <a href="http://www.cividesk.com">Cividesk</a>.<br/>
         Support for the project are reflected in CiviCRM badges.<br/> Looking for an expert? Look for the badge.<br/>
         <a href="http://www.cividesk.com">
           <img style="margin: 10px 0px; height: auto; max-width: 220px;" src="https://www.cividesk.com/sites/cividesk.com/themes/cividesk_theme/logo.png" alt="Cividesk"/>
-        </a><br/>
-        <img style="width: 80px;" src="https://www.cividesk.com/sites/cividesk.com/files/badge_sustaining_founding_partner.png" alt="Sustaining Founding Partner"/>
-        <img style="width: 80px;" src="https://www.cividesk.com/sites/cividesk.com/files/badge_sustaining_contributor.png" alt="Sustaining Contributor"/>
-      </p>
+        </a></p>
     </div>
   </footer>';
 }
